@@ -6,6 +6,13 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base, TimestampMixin
 
 
+class StationStatus(str):
+    """Station validation status constants."""
+    PENDING = "pending"
+    GREEN = "green"
+    REJECTED = "rejected"
+
+
 class Station(Base, TimestampMixin):
     __tablename__ = "stations"
 
@@ -20,6 +27,7 @@ class Station(Base, TimestampMixin):
     longitude: Mapped[float | None] = mapped_column(Float, nullable=True)
     contact_number: Mapped[str | None] = mapped_column(String(20), nullable=True)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    status: Mapped[str] = mapped_column(String(50), nullable=False, default="pending", index=True)
 
     # relationships
     dealer: Mapped["Dealer"] = relationship("Dealer", back_populates="stations")  # noqa: F821

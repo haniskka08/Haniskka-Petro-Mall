@@ -22,3 +22,11 @@ class Dealer(Base, TimestampMixin):
     stations: Mapped[list["Station"]] = relationship(  # noqa: F821
         "Station", back_populates="dealer", cascade="all, delete-orphan"
     )
+    brand_requirements: Mapped[list["BrandRequirement"]] = relationship(  # noqa: F821
+        "BrandRequirement", back_populates="brand_user",
+        foreign_keys="BrandRequirement.brand_user_id", cascade="all, delete-orphan"
+    )
+    reviewed_matches: Mapped[list["Match"]] = relationship(  # noqa: F821
+        "Match", back_populates="reviewer",
+        foreign_keys="Match.reviewed_by"
+    )

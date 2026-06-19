@@ -1,5 +1,6 @@
 """Pydantic v2 schemas for Station."""
 
+from typing import Literal
 from pydantic import BaseModel, Field
 
 
@@ -13,6 +14,7 @@ class StationCreate(BaseModel):
     longitude: float | None = None
     contact_number: str | None = Field(None, max_length=20)
     description: str | None = Field(None, max_length=2000)
+    status: str = Field("pending", max_length=50)
 
 
 class StationUpdate(BaseModel):
@@ -25,6 +27,7 @@ class StationUpdate(BaseModel):
     longitude: float | None = None
     contact_number: str | None = Field(None, max_length=20)
     description: str | None = Field(None, max_length=2000)
+    status: str | None = Field(None, max_length=50)
 
 
 class StationOut(BaseModel):
@@ -39,5 +42,6 @@ class StationOut(BaseModel):
     longitude: float | None
     contact_number: str | None
     description: str | None
+    status: str
 
     model_config = {"from_attributes": True}

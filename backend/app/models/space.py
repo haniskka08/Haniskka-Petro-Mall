@@ -1,6 +1,6 @@
 """Space ORM model."""
 
-from sqlalchemy import Enum, Float, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 import enum
 
@@ -33,5 +33,13 @@ class Space(Base, TimestampMixin):
     area_sqft: Mapped[float | None] = mapped_column(Float, nullable=True)
     monthly_rent: Mapped[float | None] = mapped_column(Float, nullable=True)
     availability_status: Mapped[str] = mapped_column(String(30), nullable=False, default="available")
+    # DB Design v4 additions
+    power_kw: Mapped[float | None] = mapped_column(Float, nullable=True)
+    water_available: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    drainage_avail: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
     station: Mapped["Station"] = relationship("Station", back_populates="spaces")  # noqa: F821
+    matches: Mapped[list["Match"]] = relationship(  # noqa: F821
+        "Match", back_populates="space", cascade="all, delete-orphan"
+    )
+

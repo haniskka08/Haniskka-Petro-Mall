@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Chip,
@@ -11,11 +12,12 @@ import {
   CheckCircleOutlined,
   ErrorOutlined,
 } from '@mui/icons-material'
+import { Link as RouterLink } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import LoadingState from '../components/LoadingState'
 import ErrorAlert from '../components/ErrorAlert'
 import { fetchHealth, type HealthResponse } from '../services/healthService'
-import { APP_NAME } from '../utils/constants'
+import { APP_NAME, ROUTES } from '../utils/constants'
 
 export default function HomePage() {
   const [health, setHealth] = useState<HealthResponse | null>(null)
@@ -38,6 +40,18 @@ export default function HomePage() {
         Controlled B2B commercial space matchmaking platform — Dealer Module.
         Phase 1 setup is complete. Backend connectivity is verified below.
       </Typography>
+
+      <Box sx={{ mb: 6 }}>
+        <Button 
+          variant="contained" 
+          component={RouterLink} 
+          to={ROUTES.LOGIN} 
+          size="large"
+          sx={{ py: 1.5, px: 4, fontSize: '1.1rem' }}
+        >
+          Enter the Application
+        </Button>
+      </Box>
 
       {loading && <LoadingState />}
       {error && <ErrorAlert message={error} />}

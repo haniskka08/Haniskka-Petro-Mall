@@ -15,6 +15,10 @@ class SpaceCreate(BaseModel):
     area_sqft: float | None = Field(None, ge=0)
     monthly_rent: float | None = Field(None, ge=0)
     availability_status: AVAILABILITY = "available"
+    # DB Design v4 additions
+    power_kw: float | None = Field(None, ge=0, description="Available electrical power capacity in kW")
+    water_available: bool = False
+    drainage_avail: bool = False
 
 
 class SpaceUpdate(BaseModel):
@@ -23,6 +27,10 @@ class SpaceUpdate(BaseModel):
     area_sqft: float | None = Field(None, ge=0)
     monthly_rent: float | None = Field(None, ge=0)
     availability_status: AVAILABILITY | None = None
+    # DB Design v4 additions
+    power_kw: float | None = Field(None, ge=0)
+    water_available: bool | None = None
+    drainage_avail: bool | None = None
 
 
 class SpaceOut(BaseModel):
@@ -33,5 +41,8 @@ class SpaceOut(BaseModel):
     area_sqft: float | None
     monthly_rent: float | None
     availability_status: str
+    power_kw: float | None
+    water_available: bool
+    drainage_avail: bool
 
     model_config = {"from_attributes": True}
